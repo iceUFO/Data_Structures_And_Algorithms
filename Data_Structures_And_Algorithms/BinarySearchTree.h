@@ -2,107 +2,106 @@
 #ifndef BINARYSEARCHTREE_H
 #define BINARYSEARCHTREE_H
 
+#include<iostream>
 
-template<typename Object, typename Comparator=less<Object>>
+template<typename T>
 class BinarySearchTree
 {
 public:
-	BinarySearchTree()=default;
+	BinarySearchTree() :root(nullptr) {};
 	BinarySearchTree(const BinarySearchTree &rhs);
 	~BinarySearchTree();
+	const BinarySearchTree &operator=(const BinarySearchTree &rhs);
 
-	const Object &findMin() const;
-	const Object &findMax() const;
-	bool contains(const Object &x) const;
+	const T &findMin() const;
+	const T &findMax() const;
+	bool contains(const T &x) const; 
 	bool isEmpty() const;
 	void printTree() const;
 
 	void makeEmpty();
-	void insert(const Obiect &x);
-	void remove(const Object &x);
-
-	const BinarySearchTree &opearator = (const BinarySearchTree &rhs);
+	void insert(const T &x);
+	void remove(const T &x);
 
 private:
 	struct BinaryNode
 	{
-		Object element;
+		T element;
 		BinaryNode *left;
 		BinaryNode *right;
 
-		BinaryNode(const Object theElement, BinaryNode *lt, BinaryNode *rt)
+		BinaryNode(const T &theElement, BinaryNode *lt, BinaryNode *rt)
 			:element(theElement), left(lt), right(rt) {}
 	};
 
 	BinaryNode *root;
-	Comparator isLessThan;
 
-	void insert(const Object &x, BinaryNode *&t) const;
-	void remove(const Object &x, BinaryNode *&t) const;
+	void insert(const T &x, BinaryNode *&t);
+	void remove(const T &x, BinaryNode *&t);
 
-	BinaryNode *findMix(BinaryNode *t) const;
+	BinaryNode *findMin(BinaryNode *t) const;
 	BinaryNode *findMax(BinaryNode *t) const;
 
 	void makeEmpty(BinaryNode *&t);
 	void printTree(BinaryNode *t) const;
 	BinaryNode *clone(BinaryNode *t) const;
 
-	bool contains(const Object &x, BinaryNode *t) const;
+	bool contains(const T &x, BinaryNode *t) const;
 
 };
 
-template<typename Object, typename Comparator=less<Object>>
-bool BinarySearchTree<Object>::contains(const Object &x, BinaryNode *t) const
+template<typename T>
+bool BinarySearchTree<T>::contains(const T &x, BinaryNode *t) const
 {
 	if (t == nullptr)
 		return false;
-	else if (isLessThan(x, t->element))
+	else if (x < t->element)
 		return contains(x, t->left);
-	else if (isLessThan(t->element, x))
+	else if (t->element < x)
 		return contains(x, t->right);
 	else
 		return true;
 }
 
-template<typename Object, typename Comparator=less<Object>>
-bool BinarySearchTree<Object>::contains(const Object &x) const
+template<typename T>
+bool BinarySearchTree<T>::contains(const T &x) const
 {
 	return contains(x, root);
 }
 
-template<typename Object, typename Comparator=less<Object>>
-BinaryNode *BinarySearchTree<Object>::findMin(BinaryNode *t) const
+template<typename T>                   //依赖受限名称不能作为类型看待，除非在它前面加一个关键字typename
+typename BinarySearchTree<T>::BinaryNode *BinarySearchTree<T>::findMin(BinaryNode *t) const
 {
 	if (t == nullptr)
-		return nullptr;
-	if (t->left == nullptr)
+		return false;
+	else if (t->left == nullptr)
 		return t;
 	return findMin(t->left);
 }
 
-template<typename Object, typename Comparator = less<Object>>
-const Object &BinarySearchTree<Object>::findMin() const
+template<typename T>
+const T &BinarySearchTree<T>::findMin() const
 {
-	return findMix(root);
+	return findMin(root)->element;
 }
 
-template<typename Object, typename Comparator = less<Object>>
-BinaryNode *BinarySearchTree<Object>::findMax(BinaryNode *t) const
+template<typename T>
+typename BinarySearchTree<T>::BinaryNode *BinarySearchTree<T>::findMax(BinaryNode *t) const
 {
-	if (!t = nullptr)
+	if (t != nullptr)
 		while (t->right != nullptr)
 			t = t->right;
 	return t;
 }
 
-template<typename Object, typename Comparator = less<Object>>
-const Object &BinarySearchTree<Object>::findMax() const
+template<typename T>
+const T &BinarySearchTree<T>::findMax() const
 {
-	return findMax(root);
+	return findMax(root)->element;
 }
 
-template<typename Object, typename Comparator = less<Object>>
-void BinarySearchTree<Object>::insert(const Object &x, BinaryNode *&t) const
+template<typename T>
+void BinarySearchTree<T>::insert(const T &x, BinaryNode *&t)
 {
 	if (t == nullptr)
 		t = new BinaryNode(x, nullptr, nullptr);
@@ -111,17 +110,17 @@ void BinarySearchTree<Object>::insert(const Object &x, BinaryNode *&t) const
 	else if (t->element < x)
 		insert(x, t->right);
 	else
-		return;                             //do nothing
+		return;
 }
 
-template<typename Object, typename Comparator = less<Object>>
-void BinarySearchTree<Object>::insert(const Obiect &x)
+template<typename T>
+void BinarySearchTree<T>::insert(const T &x)
 {
 	insert(x, root);
 }
 
-template<typename Object, typename Comparator = less<Object>>
-void BinarySearchTree<Object>::remove(const Object &x, BinaryNode *&t) const
+template<typename T>
+void BinarySearchTree<T>::remove(const T &x, BinaryNode *&t)
 {
 	if (t == nullptr)
 		return;
@@ -129,7 +128,7 @@ void BinarySearchTree<Object>::remove(const Object &x, BinaryNode *&t) const
 		remove(x, t->left);
 	else if (t->element < x)
 		remove(x, t->right);
-	else if (t->left != nullptr &&t->right != nullptr)
+	else if (t->left != nullptr && t->right != nullptr)
 	{
 		t->element = findMin(t->right)->element;
 		remove(t->element, t->right);
@@ -141,10 +140,85 @@ void BinarySearchTree<Object>::remove(const Object &x, BinaryNode *&t) const
 		delete oldNode;
 	}
 }
-template<typename Object, typename Comparator = less<Object>>
-void BinarySearchTree<Object>::remove(const Object &x)
+
+template<typename T>
+void BinarySearchTree<T>::remove(const T &x)
 {
 	remove(x, root);
+}
+
+template<typename T>
+void BinarySearchTree<T>::makeEmpty(BinaryNode *&t)
+{
+	if (t != nullptr)
+	{
+		makeEmpty(t->left);
+		makeEmpty(t->right);
+		delete t;
+	}
+	t = nullptr;
+}
+
+template<typename T>
+BinarySearchTree<T>::BinarySearchTree(const BinarySearchTree &rhs)
+{
+	*this = rhs;
+}
+
+template<typename T>
+void BinarySearchTree<T>::makeEmpty()
+{
+	makeEmpty(root);
+}
+
+template<typename T>
+BinarySearchTree<T>::~BinarySearchTree()
+{
+	makeEmpty();
+}
+
+template<typename T>
+bool BinarySearchTree<T>::isEmpty() const
+{
+	if (this != nullptr)
+		return false;
+	return true;
+}
+
+template<typename T>
+void BinarySearchTree<T>::printTree(BinaryNode *t) const
+{
+	if (t)
+	{
+		std::cout << t->element << " ";
+		printTree(t->left);
+		printTree(t->right);
+	}
+}
+
+template<typename T>
+void BinarySearchTree<T>::printTree() const
+{
+	printTree(root);
+}
+
+template<typename T>
+typename BinarySearchTree<T>::BinaryNode *BinarySearchTree<T>::clone(BinaryNode *t) const
+{
+	if (t == nullptr)
+		return nullptr;
+	return new BinaryNode(t->element, clone(t->left), clone(t->right));
+}
+
+template<typename T>
+const BinarySearchTree<T> &BinarySearchTree<T>::operator=(const BinarySearchTree &rhs)
+{
+	if (this != &rhs)
+	{
+		makeEmpty();
+		root = clone(rhs.root);
+	}
+	return *this;
 }
 
 #endif // !BINARYSEARCHTREE_H
