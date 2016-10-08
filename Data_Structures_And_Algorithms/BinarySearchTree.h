@@ -190,8 +190,8 @@ void BinarySearchTree<T>::printTree(BinaryNode *t) const
 {
 	if (t)
 	{
-		std::cout << t->element << " ";
 		printTree(t->left);
+		std::cout << t->element << " ";
 		printTree(t->right);
 	}
 }
