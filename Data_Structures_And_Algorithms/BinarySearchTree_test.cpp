@@ -29,4 +29,8 @@ void BinarySearchTree_test()
 	bst.printTree();
 	std::cout << std::endl;
 
+	if (bst.isEmpty())
+		std::cout << "empty" << std::endl;
+	else
+		std::cout << "not empty" << std::endl;
 }

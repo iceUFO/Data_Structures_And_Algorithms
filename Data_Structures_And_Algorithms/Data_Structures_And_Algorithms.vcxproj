@@ -110,6 +110,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AvlTree.h" />
     <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="declarations.h" />
   </ItemGroup>
