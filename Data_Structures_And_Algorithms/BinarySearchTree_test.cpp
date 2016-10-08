@@ -30,7 +30,7 @@ void BinarySearchTree_test()
 	std::cout << std::endl;
 
 	if (bst.isEmpty())
-		std::cout << "empty" << std::endl;
+		std::cout << "Empty" << std::endl;
 	else
-		std::cout << "not empty" << std::endl;
+		std::cout << "not Empty" << std::endl;
 }
