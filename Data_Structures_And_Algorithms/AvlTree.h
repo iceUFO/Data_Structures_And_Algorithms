@@ -18,6 +18,7 @@ public:
 	bool contains(const T &x) const;
 	bool isEmpty() const;
 	void printTree() const;
+	int height() const;
 
 	void makeEmpty();
 	void insert(const T &x);
@@ -189,6 +190,12 @@ template<typename T>
 int AvlTree<T>::height(AvlNode *t) const
 {
 	return t == nullptr ? -1 : t->element;
+}
+
+template<typename T>
+int AvlTree<T>::height() const
+{
+	return height(root);
 }
 
 template<typename T>

@@ -115,6 +115,7 @@
     <ClInclude Include="declarations.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AvlTree_test.cpp" />
     <ClCompile Include="BinarySearchTree_test.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
