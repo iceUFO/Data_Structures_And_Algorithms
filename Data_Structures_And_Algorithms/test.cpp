@@ -3,7 +3,8 @@
 
 int main()
 {
-	BinarySearchTree_test();
+	//BinarySearchTree_test();
+	AvlTree_test();
 	system("pause");
 	return 0;
 

@@ -17,8 +17,11 @@ public:
 	const T &findMax() const;
 	bool contains(const T &x) const;
 	bool isEmpty() const;
-	void printTree() const;
 	int height() const;
+	
+    void printTree() const;
+	void preorderPrintTree() const;
+	void postorderPrintTree() const;
 
 	void makeEmpty();
 	void insert(const T &x);
@@ -54,9 +57,11 @@ private:
 
 	bool contains(const T &x, AvlNode *t) const;
 	void makeEmpty(AvlNode *&t);
-	void printTree(AvlNode *t) const;
 	AvlNode *clone(AvlNode *t) const;
-
+	
+    void printTree(AvlNode *t) const;
+	void preorderPrintTree(AvlNode *t) const;
+	void postorderPrintTree(AvlNode *t) const;
 };
 
 template<typename T>
@@ -82,7 +87,7 @@ template<typename T>
 typename AvlTree<T>::AvlNode *AvlTree<T>::findMin(AvlNode *t) const
 {
 	if(t!=nullptr)
-		while (t->left!=null)
+		while (t->left!=nullptr)
 		{
 			t = t->left;
 		}
@@ -138,6 +143,40 @@ void AvlTree<T>::printTree() const
 }
 
 template<typename T>
+void AvlTree<T>::preorderPrintTree(AvlNode *t) const
+{
+	if (t)
+	{
+		std::cout << t->element << " ";
+		preorderPrintTree(t->left);
+		preorderPrintTree(t->right);
+	}
+}
+
+template<typename T>
+void AvlTree<T>::preorderPrintTree() const
+{
+	preorderPrintTree(root);
+}
+
+template<typename T>
+void AvlTree<T>::postorderPrintTree(AvlNode *t) const
+{
+	if (t)
+	{
+		postorderPrintTree(t->left);
+		postorderPrintTree(t->right);
+		std::cout << t->element << " ";
+	}
+}
+
+template<typename T>
+void AvlTree<T>::postorderPrintTree() const
+{
+	postorderPrintTree(root);
+}
+
+template<typename T>
 void AvlTree<T>::makeEmpty(AvlNode *&t)
 {
 	if (t != nullptr)
@@ -189,7 +228,7 @@ const AvlTree<T> &AvlTree<T>::operator=(const AvlTree &rhs)
 template<typename T>
 int AvlTree<T>::height(AvlNode *t) const
 {
-	return t == nullptr ? -1 : t->element;
+	return t == nullptr ? -1 : t->height;
 }
 
 template<typename T>
@@ -213,7 +252,7 @@ template<typename T>
 void AvlTree<T>::rotateWithRightChild(AvlNode *&k2)
 {
 	AvlNode *k1 = k2->right;
-	k2->rhght = k1->left;
+	k2->right = k1->left;
 	k1->left = k2;
 	k2->height = std::max(height(k2->left), height(k2->right)) + 1;
 	k1->height = std::max(k2->height, height(k1->right)) + 1;
@@ -301,7 +340,7 @@ void AvlTree<T>::remove(const T &x, AvlNode *&t)
 	}
 	else if (t->left != nullptr && t->right != nullptr)
 	{
-		t->element = findMix(t->right)->element;
+		t->element = findMin(t->right)->element;
 		remove(t->element, t->right);
 		t->height = std::max(height(t->left), height(t->right)) + 1;
 	}

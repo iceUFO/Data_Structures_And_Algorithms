@@ -17,7 +17,10 @@ public:
 	const T &findMax() const;
 	bool contains(const T &x) const; 
 	bool isEmpty() const;
+
 	void printTree() const;
+	void preorderPrintTree() const;
+	void postorderPrintTree() const;
 
 	void makeEmpty();
 	void insert(const T &x);
@@ -43,8 +46,11 @@ private:
 	BinaryNode *findMax(BinaryNode *t) const;
 
 	void makeEmpty(BinaryNode *&t);
-	void printTree(BinaryNode *t) const;
 	BinaryNode *clone(BinaryNode *t) const;
+	
+    void printTree(BinaryNode *t) const;
+	void preorderPrintTree(BinaryNode *t) const;
+	void postorderPrintTree(BinaryNode *t) const;
 
 	bool contains(const T &x, BinaryNode *t) const;
 
@@ -200,6 +206,40 @@ template<typename T>
 void BinarySearchTree<T>::printTree() const
 {
 	printTree(root);
+}
+
+template<typename T>
+void BinarySearchTree<T>::preorderPrintTree(BinaryNode *t) const
+{
+	if (t)
+	{
+		std::cout << t->element << " ";
+		preorderPrintTree(t->left);
+		preorderPrintTree(t->right);
+	}
+}
+
+template<typename T>
+void BinarySearchTree<T>::preorderPrintTree() const
+{
+	preorderPrintTree(root);
+}
+
+template<typename T>
+void BinarySearchTree<T>::postorderPrintTree(BinaryNode *t) const
+{
+	if (t)
+	{
+		postorderPrintTree(t->left);
+		postorderPrintTree(t->right);
+		std::cout << t->element << " ";
+	}
+}
+
+template<typename T>
+void BinarySearchTree<T>::postorderPrintTree() const
+{
+	postorderPrintTree(root);
 }
 
 template<typename T>
