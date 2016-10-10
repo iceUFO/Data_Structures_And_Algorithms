@@ -5,5 +5,5 @@
 void BinarySearchTree_test();
 
 void AvlTree_test();
-;
+
 #endif // DECLARATION_H
