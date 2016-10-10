@@ -9,7 +9,12 @@ void BinarySearchTree_test()
 		bst.insert(i);
 	}
 	bst.insert(-1);
+	std::cout << "inorder print: ";
 	bst.printTree();
+	std::cout << std::endl << "preorder print: ";
+	bst.preorderPrintTree();
+	std::cout << std::endl << "postorder print:";
+	bst.postorderPrintTree();
 	std::cout << std::endl;
 
 	std::cout << "Max:" << bst.findMax() << std::endl;
@@ -26,6 +31,7 @@ void BinarySearchTree_test()
 	std::cout << std::endl;
 
 	bst.remove(3);
+	std::cout << "after delete: ";
 	bst.printTree();
 	std::cout << std::endl;
 

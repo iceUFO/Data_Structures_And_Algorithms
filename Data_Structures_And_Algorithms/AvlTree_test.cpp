@@ -7,15 +7,16 @@ void AvlTree_test()
 	{
 		avl.insert(i);
 	}
+	std::cout << "inorder print: ";
 	avl.printTree();
-	std::cout << std::endl;
+	std::cout << std::endl << "preorder print: ";
 	avl.preorderPrintTree();
-	std::cout << std::endl;
+	std::cout << std::endl << "postorder print:";
 	avl.postorderPrintTree();
 	std::cout << std::endl;
 	std::cout << "tree height: " << avl.height() << std::endl;
 
-	/*std::cout << "Max: " << avl.findMax() << std::endl;
+	std::cout << "Max: " << avl.findMax() << std::endl;
 	std::cout << "Min: " << avl.findMin() << std::endl;
 
 	if(avl.contains(6))
@@ -29,6 +30,8 @@ void AvlTree_test()
 	std::cout << std::endl;
 
 	avl.remove(3);
+	avl.remove(8);
+	std::cout << "after delete: ";
 	avl.printTree();
 	std::cout << std::endl;
 	std::cout << "tree height: " << avl.height() << std::endl;
@@ -36,5 +39,5 @@ void AvlTree_test()
 	if (avl.isEmpty())
 		std::cout << "Empty" << std::endl;
 	else
-		std::cout << "not Empty" << std::endl;*/
+		std::cout << "not Empty" << std::endl;
 }
